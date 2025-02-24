@@ -10,7 +10,7 @@ public class ColorfulTextWrapper
     {
         Console.ForegroundColor = color;
         Console.Write($"[{type}] ");
-        Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.Gray;
         if (newLine)
             Console.WriteLine(text);
         else
@@ -26,7 +26,7 @@ public class ColorfulTextWrapper
             Console.WriteLine(text);
         else
             Console.Write(text);
-        Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.Gray;
     }
 
     public static void WriteAnimatedTextWithColor(string text, ConsoleColor color, bool newLine)
@@ -36,7 +36,7 @@ public class ColorfulTextWrapper
         {
             Console.ForegroundColor = color;
             Console.Write(c);
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Gray;
             Thread.Sleep(delay);
         }
 
@@ -77,6 +77,14 @@ public class ColorfulTextWrapper
         }
     }
     
+    public static void WriteCenteredText(string text, bool newLine)
+    {
+        Console.SetCursorPosition((Console.WindowWidth - text.Length) / 2, Console.CursorTop);
+        if (newLine)
+            Console.WriteLine(text);
+        Console.Write(text);
+    }
+    
     public static void HighlightWordInText(string text, ConsoleColor color, string word, bool newLine, bool centered)
     {
         var startIndex = text.IndexOf(word, StringComparison.Ordinal);
@@ -88,7 +96,7 @@ public class ColorfulTextWrapper
             Console.Write(text[..startIndex]);
             Console.ForegroundColor = color;
             Console.Write(word);
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write(text[(startIndex + word.Length)..]);
             if(newLine)
                 Console.WriteLine(string.Empty);
