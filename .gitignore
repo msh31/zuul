@@ -5,3 +5,5 @@ obj
 
 *.sln
 .DS*
+/.idea
+/builds
