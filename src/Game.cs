@@ -59,8 +59,9 @@ class Game
 			Command command = parser.GetCommand();
 			finished = ProcessCommand(command);
 		}
-		Console.WriteLine("Thank you for playing.");
-		Console.WriteLine("Press [Enter] to continue.");
+		ColorfulTextWrapper.HighlightWordInText("Thank you for playing! Press [Enter] to continue.", ConsoleColor.Magenta, "Enter", true, true);
+		// Console.WriteLine("Thank you for playing.");
+		// Console.WriteLine("Press [Enter] to continue.");
 		Console.ReadLine();
 	}
 
@@ -68,10 +69,9 @@ class Game
 	private void PrintWelcome()
 	{
 		Console.WriteLine();
-		Console.WriteLine("Welcome to Zuul!");
-		Console.WriteLine("Zuul is a new, incredibly boring adventure game.");
-		Console.WriteLine("Type 'help' if you need help.");
-		Console.WriteLine();
+		ColorfulTextWrapper.HighlightWordInText($"Welcome to Zuul, {Environment.UserName}!", ConsoleColor.Cyan, "Zuul", true, true);
+		ColorfulTextWrapper.HighlightWordInText("Zuul is a new, incredibly boring adventure game.", ConsoleColor.Gray, "adventure", true, true);
+		ColorfulTextWrapper.HighlightWordInText("Type 'help' if you need help.\n", ConsoleColor.Yellow, "help", true, true);
 		Console.WriteLine(currentRoom.GetLongDescription());
 	}
 
