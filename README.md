@@ -1,13 +1,10 @@
 # Zuul
 
-A boring textadventure.
+A boring text adventure.
 
 ## How to play
 
-Install the latest [dotnet](https://dotnet.microsoft.com/en-us/download) or latest LTS version.
+Download the latest [release](https://github.com/msh31/zuul/releases/) and run the downloaded file
 
-Open this directory (with the Zuul.csproj file) in the terminal and type:
-
-```
-dotnet run
-```
+## Preview
+![there should be an image here wtf bruh](https://i.imgur.com/tc11zYB.png)
