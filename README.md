@@ -8,4 +8,4 @@ Download the latest [release](https://github.com/msh31/zuul/releases/) and run t
 (Make sure to have .NET 9 installed!)
 
 ## Preview
-![there should be an image here wtf bruh](https://i.imgur.com/tc11zYB.png)
+![image load error](https://github.com/user-attachments/assets/cce19c99-21de-44f2-b69e-120f23c86e3b)
