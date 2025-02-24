@@ -1,15 +1,10 @@
 ﻿// ReSharper disable InconsistentNaming 
-namespace SaveManager.UI;
-
 // Inspired by https://github.com/tomakita/Colorful.Console
 // When I used Colorful.Console, it didn't really work well within the terminal, so I wrote my own.
 
 public class ColorfulTextWrapper
 {
     private static readonly Random random = new();
-    private static readonly char[] SpinnerFrames = { '█', '▀', '▄', ' ' };
-    public static bool isSpinning = false;
-    public static int spinnerLine = 0;
     
     private static void SetTypeTextWithColor(string text, string type, ConsoleColor color, bool newLine)
     {
