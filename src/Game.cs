@@ -44,7 +44,11 @@ class Game
 		office.AddExit("down", outside);
 
 		// Create your Items here
-		// ...
+		Item crowbar = new(5, "crowbar");
+		Item chainsaw = new(15, "chainsaw");
+		Item medkit = new(25, "medkit");
+		Item key = new(30, "key");
+		
 		// And add them to the Rooms
 		// ...
 
