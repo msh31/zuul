@@ -29,13 +29,16 @@ class Game
 		outside.AddExit("west", pub);
 
 		theatre.AddExit("west", outside);
+		theatre.AddExit("up", pub);
 
 		pub.AddExit("east", outside);
 
 		lab.AddExit("north", outside);
 		lab.AddExit("east", office);
+		lab.AddExit("down", office);
 
 		office.AddExit("west", lab);
+		office.AddExit("down", outside);
 
 		// Create your Items here
 		// ...
