@@ -64,6 +64,12 @@ class Game
 		{
 			Command command = parser.GetCommand();
 			finished = ProcessCommand(command);
+
+			if (!player.IsAlive())
+			{
+				ColorfulTextWrapper.HighlightWordInText("You died.", ConsoleColor.Red, "died", true, false);
+				finished = true;
+			}
 		}
 		ColorfulTextWrapper.HighlightWordInText("Thank you for playing! Press [Enter] to continue.", ConsoleColor.Magenta, "Enter", true, true);
 		Console.ReadLine();
@@ -150,6 +156,14 @@ class Game
 			return;
 		}
 
+		player.Damage(8);
+		
+		if (!player.IsAlive())
+		{
+			//ColorfulTextWrapper.HighlightWordInText("You are dead.", ConsoleColor.Red, "dead", true, true);
+			return;
+		}
+		
 		player.CurrentRoom = nextRoom;
 		
 		Console.WriteLine(player.CurrentRoom.GetLongDescription());

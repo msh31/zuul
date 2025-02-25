@@ -15,17 +15,17 @@ class Player
     }
     
     // methods
-    private void Damage(int damage)
+    public void Damage(int damage)
     {
         this.Health -= damage;
     }
 
-    private void Heal(int heal)
+    public void Heal(int heal)
     {
         this.Health += heal;
     }
 
-    private bool IsAlive()
+    public bool IsAlive()
     {
         return this.Health > 0;
     }
