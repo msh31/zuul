@@ -60,8 +60,6 @@ class Game
 			finished = ProcessCommand(command);
 		}
 		ColorfulTextWrapper.HighlightWordInText("Thank you for playing! Press [Enter] to continue.", ConsoleColor.Magenta, "Enter", true, true);
-		// Console.WriteLine("Thank you for playing.");
-		// Console.WriteLine("Press [Enter] to continue.");
 		Console.ReadLine();
 	}
 
@@ -95,6 +93,9 @@ class Game
 				break;
 			case "go":
 				GoRoom(command);
+				break;
+			case "look":
+				Console.WriteLine(currentRoom.GetLongDescription());
 				break;
 			case "quit":
 				wantToQuit = true;
