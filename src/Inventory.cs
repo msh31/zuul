@@ -3,20 +3,22 @@
 class Inventory
 {
     // fields
-    private int maxWeight;
     private Dictionary<string, Item> items;
 
+    // auto property
+    public int MaxWeight { get; private set; }
+    
     // constructor
     public Inventory(int maxWeight)
     {
-        this.maxWeight = maxWeight;
+        this.MaxWeight = maxWeight;
         items = new Dictionary<string, Item>();
     }
     
     // methods
     public bool Put(string itemName, Item item)
     {
-        if (item.Weight > maxWeight)
+        if (item.Weight > MaxWeight)
         {
             return false;
         }
@@ -52,7 +54,7 @@ class Inventory
 
     public int FreeWeight()
     {
-        return maxWeight - TotalWeight();
+        return MaxWeight - TotalWeight();
     }
 
     public string Show()

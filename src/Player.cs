@@ -2,12 +2,10 @@
 
 class Player
 {
-    // fields
-    private Inventory backpack;
-    
     // auto property
     public Room CurrentRoom { get; set; }
     public int Health { get; private set; }
+    public Inventory backpack { get; }
     
     
     // constructor
