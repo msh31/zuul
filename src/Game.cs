@@ -47,10 +47,10 @@ class Game
 		Item crowbar = new(5, "crowbar");
 		Item chainsaw = new(15, "chainsaw");
 		Item medkit = new(25, "medkit");
-		Item key = new(30, "key");
+		Item key = new(10, "key");
 		
 		// And add them to the Rooms
-		// ...
+		outside.Chest.Put("crowbar", crowbar);
 
 		// Start game outside
 		player.CurrentRoom = outside;
@@ -111,7 +111,7 @@ class Game
 				GoRoom(command);
 				break;
 			case "look":
-				Console.WriteLine(player.CurrentRoom.GetLongDescription());
+				Look();
 				break;
 			case "status":
 				PrintStatus();
@@ -142,8 +142,18 @@ class Game
 	// Print out player status information
 	private void PrintStatus()
 	{
-		ColorfulTextWrapper.HighlightWordInText($"Health: {player.Health} / 100", ConsoleColor.Green, $"{player.Health}", true, false);
+		ColorfulTextWrapper.HighlightWordInText($"Health: {player.Health} / 100", ConsoleColor.Green, "Health", true, false);
+		ColorfulTextWrapper.HighlightWordInText($"Weight: {player.backpack.TotalWeight()} / {player.backpack.MaxWeight} kg", ConsoleColor.Blue, "Weight", true, false);
+		
+		ColorfulTextWrapper.WriteFormattedTextByType(player.ShowBackpack(), "inf", false, false);
 		// TODO: Add inventory (max)weight > weight / maxWeight
+	}
+	
+	// Show items in the room
+	private void Look()
+	{
+		Console.WriteLine(player.CurrentRoom.GetLongDescription());
+		Console.WriteLine(player.CurrentRoom.ShowItems());
 	}
 
 	// Try to go to one direction. If there is an exit, enter the new

@@ -54,4 +54,24 @@ class Inventory
     {
         return maxWeight - TotalWeight();
     }
+
+    public string Show()
+    {
+        if (items.Count == 0)
+        {
+            return "Nothing";
+        }
+
+        string inventory = "";
+        
+        foreach (var kvp in items)
+        {
+            string itemName = kvp.Key;
+            Item item = kvp.Value;
+
+            inventory += $"{itemName} ({item.Weight} kg): {item.Description}";
+        }
+
+        return inventory;
+    }
 }

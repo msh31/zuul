@@ -69,4 +69,11 @@ class Room
 
 		return str;
 	}
+	
+	// helper method
+	public string ShowItems()
+	{
+		ColorfulTextWrapper.WriteFormattedTextByType("You see the following items: ", "inf", true, false);
+		return chest.Show();
+	}
 }
