@@ -29,8 +29,9 @@ class Inventory
     {
         if (items.ContainsKey(itemName))
         {
+            Item item = items[itemName];
             items.Remove(itemName);
-            return items[itemName];
+            return item;
         }
         
         return null;
