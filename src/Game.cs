@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using Zuul;
 
 class Game
@@ -101,6 +102,9 @@ class Game
 				break;
 			case "look":
 				Console.WriteLine(player.CurrentRoom.GetLongDescription());
+				break;
+			case "status":
+				ColorfulTextWrapper.HighlightWordInText($"Health: {player.Health} / 100", ConsoleColor.Green, $"{player.Health}", true, false);
 				break;
 			case "quit":
 				wantToQuit = true;
