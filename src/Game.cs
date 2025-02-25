@@ -114,7 +114,7 @@ class Game
 				Console.WriteLine(player.CurrentRoom.GetLongDescription());
 				break;
 			case "status":
-				ColorfulTextWrapper.HighlightWordInText($"Health: {player.Health} / 100", ConsoleColor.Green, $"{player.Health}", true, false);
+				PrintStatus();
 				break;
 			case "quit":
 				wantToQuit = true;
@@ -137,6 +137,13 @@ class Game
 		Console.WriteLine();
 		// let the parser print the commands
 		parser.PrintValidCommands();
+	}
+	
+	// Print out player status information
+	private void PrintStatus()
+	{
+		ColorfulTextWrapper.HighlightWordInText($"Health: {player.Health} / 100", ConsoleColor.Green, $"{player.Health}", true, false);
+		// TODO: Add inventory (max)weight > weight / maxWeight
 	}
 
 	// Try to go to one direction. If there is an exit, enter the new
