@@ -151,6 +151,7 @@ class Game
 		}
 
 		player.CurrentRoom = nextRoom;
+		
 		Console.WriteLine(player.CurrentRoom.GetLongDescription());
 	}
 }

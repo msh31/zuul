@@ -27,11 +27,6 @@ class Player
 
     private bool IsAlive()
     {
-        if (this.Health <= 0)
-        {
-            return true;
-        }
-
-        return false;
+        return this.Health > 0;
     }
 }
