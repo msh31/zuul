@@ -64,7 +64,9 @@ class Player
     
     public string ShowBackpack()
     {
-        ColorfulTextWrapper.WriteFormattedTextByType("Your backpack contains: ", "inf", true, false);
+        ColorfulTextWrapper.WriteFormattedTextByType("Your backpack contains: ", "inf", false, false);
         return backpack.Show();
     }
+    
+    
 }
