@@ -116,6 +116,12 @@ class Game
 			case "status":
 				PrintStatus();
 				break;
+			case "take":
+				Take(command);
+				break;
+			case "drop":
+				Drop(command);
+				break;
 			case "quit":
 				wantToQuit = true;
 				break;
@@ -188,5 +194,48 @@ class Game
 		player.CurrentRoom = nextRoom;
 		
 		Console.WriteLine(player.CurrentRoom.GetLongDescription());
+	}
+
+	private void Take(Command command)
+	{
+		if (!command.HasSecondWord())
+		{
+			Console.WriteLine("Take what?");
+			return;
+		}
+		
+		string itemName = command.SecondWord;
+
+		if (player.TakeFromChest(itemName))
+		{
+			// message handling already done in takefromchest method
+		}
+		else
+		{
+			if (player.CurrentRoom.Chest.Get(itemName) == null)
+			{
+				ColorfulTextWrapper.HighlightWordInText($"Item: {itemName} does not exist in {player.CurrentRoom}", ConsoleColor.Yellow, $"{itemName}", true, false);
+			}
+		}
+	}
+	
+	private void Drop(Command command)
+	{
+		if (!command.HasSecondWord())
+		{
+			Console.WriteLine("Drop what?");
+			return;
+		}
+		
+		string itemName = command.SecondWord;
+		
+		if (player.DropToChest(itemName))
+		{
+			// message handling already done in takefromchest method
+		}
+		else
+		{
+			ColorfulTextWrapper.HighlightWordInText($"You don't have a {itemName} in your backpack!", ConsoleColor.Yellow, $"{itemName}", true, false);
+		}
 	}
 }
