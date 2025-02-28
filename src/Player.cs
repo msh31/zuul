@@ -36,6 +36,12 @@ class Player
     {
         Item item = CurrentRoom.Chest.Get(itemName);
 
+        if (item == null)
+        {
+            ColorfulTextWrapper.HighlightWordInText($"Item: {itemName} does not exist here", ConsoleColor.Yellow, $"{itemName}", true, false);
+            return false;
+        }
+
         if (backpack.Put(itemName, item))
         {
             ColorfulTextWrapper.WriteAnimatedTextWithColor($"Added {itemName} to backpack!", ConsoleColor.Gray, true);

@@ -155,7 +155,7 @@ class Game
 		ColorfulTextWrapper.HighlightWordInText($"Health: {player.Health} / 100", ConsoleColor.Green, "Health", true, false);
 		ColorfulTextWrapper.HighlightWordInText($"Weight: {player.backpack.TotalWeight()} / {player.backpack.MaxWeight} kg", ConsoleColor.Blue, "Weight", true, false);
 		
-		ColorfulTextWrapper.WriteFormattedTextByType(player.ShowBackpack(), "inf", false, false);
+		ColorfulTextWrapper.WriteTextWithColor(player.ShowBackpack(), ConsoleColor.Gray, false, false);
 		// TODO: Add inventory (max)weight > weight / maxWeight
 	}
 	
@@ -207,20 +207,10 @@ class Game
 			Console.WriteLine("Take what?");
 			return;
 		}
-		
+    
 		string itemName = command.SecondWord;
-
-		if (player.TakeFromChest(itemName))
-		{
-			// message handling already done in takefromchest method
-		}
-		else
-		{
-			if (player.CurrentRoom.Chest.Get(itemName) == null)
-			{
-				ColorfulTextWrapper.HighlightWordInText($"Item: {itemName} does not exist in {player.CurrentRoom}", ConsoleColor.Yellow, $"{itemName}", true, false);
-			}
-		}
+		
+		player.TakeFromChest(itemName); //includes error checking
 	}
 	
 	private void Drop(Command command)
