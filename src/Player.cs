@@ -67,6 +67,35 @@ class Player
         ColorfulTextWrapper.WriteFormattedTextByType("Your backpack contains: ", "inf", false, false);
         return backpack.Show();
     }
+
+    public string Use(string itemName)
+    {
+        Item item = backpack.Get(itemName);
+
+        if (item == null)
+            return $"{itemName} was not found in the backpack!"; 
+
+        bool consume = false;
+        string result = $"You used the {itemName} ";
+        
+        switch (itemName)
+        {
+            case "medkit":
+                Heal(25);
+                result += $"and restored 25 health! Current health: {Health}";
+                consume = true;
+                break;
+            case "key":
+                result += $"but it doesn't do anything yet..";
+                break;
+            default:
+                result = $"You fiddle with the {itemName}, but nothing special happens.";
+                break;
+        }
+        
+        if (!consume)
+            backpack.Put(itemName, item);
     
-    
+        return result;
+    }
 }

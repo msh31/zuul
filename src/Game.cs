@@ -51,6 +51,7 @@ class Game
 		
 		// And add them to the Rooms
 		outside.Chest.Put("crowbar", crowbar);
+		pub.Chest.Put("medkit", medkit);
 
 		// Start game outside
 		player.CurrentRoom = outside;
@@ -121,6 +122,9 @@ class Game
 				break;
 			case "drop":
 				Drop(command);
+				break;
+			case "use":
+				Use(command);
 				break;
 			case "quit":
 				wantToQuit = true;
@@ -237,5 +241,19 @@ class Game
 		{
 			ColorfulTextWrapper.HighlightWordInText($"You don't have a {itemName} in your backpack!", ConsoleColor.Yellow, $"{itemName}", true, false);
 		}
+	}
+
+	private void Use(Command command)
+	{
+		if (!command.HasSecondWord())
+		{
+			Console.WriteLine("Use what?");
+			return;
+		}
+    
+		string itemName = command.SecondWord;
+		string result = player.Use(itemName);
+		
+		ColorfulTextWrapper.WriteFormattedTextByType(result, "inf", true, false);
 	}
 }

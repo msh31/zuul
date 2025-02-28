@@ -16,6 +16,7 @@ class CommandLibrary
 		validCommands.Add("status");
 		validCommands.Add("take");
 		validCommands.Add("drop");
+		validCommands.Add("use");
 		validCommands.Add("quit");
 	}
 
