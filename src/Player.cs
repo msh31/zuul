@@ -5,6 +5,7 @@ class Player
     // auto property
     public Room CurrentRoom { get; set; }
     public int Health { get; private set; }
+    public int MaxHealth { get; }
     public Inventory backpack { get; }
     
     
@@ -13,6 +14,7 @@ class Player
     {
         CurrentRoom = null;
         this.Health = 100;
+        this.MaxHealth = 100;
         this.backpack = new Inventory(25); 
     }
     
@@ -25,6 +27,9 @@ class Player
     public void Heal(int heal)
     {
         this.Health += heal;
+
+        if (Health > MaxHealth)
+            Health = MaxHealth;
     }
 
     public bool IsAlive()
@@ -44,12 +49,12 @@ class Player
 
         if (backpack.Put(itemName, item))
         {
-            ColorfulTextWrapper.WriteAnimatedTextWithColor($"Added {itemName} to backpack!", ConsoleColor.Gray, true);
+            ColorfulTextWrapper.HighlightWordInText($"Added {itemName} to backpack!", ConsoleColor.Gray, $"{itemName}", true, false);
             return true;
         }
         else
         {
-            ColorfulTextWrapper.WriteAnimatedTextWithColor($"{itemName} is too heavy!", ConsoleColor.Red, true);
+            ColorfulTextWrapper.HighlightWordInText($"{itemName} is too heavy!", ConsoleColor.Red, $"{itemName}", true, false);
             CurrentRoom.Chest.Put(itemName, item);
             return false;
         }
@@ -88,7 +93,7 @@ class Player
         {
             case "medkit":
                 Heal(25);
-                result += $"and restored 25 health! Current health: {Health}";
+                result += $"! Current health: {Health}";
                 consume = true;
                 break;
             case "key":
