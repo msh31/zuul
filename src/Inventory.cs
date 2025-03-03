@@ -23,6 +23,11 @@ class Inventory
             return false;
         }
 
+        if (TotalWeight() + item.Weight > MaxWeight)
+        {
+            return false;
+        }
+
         items.Add(itemName, item);
         return true;
     }
@@ -71,7 +76,7 @@ class Inventory
             string itemName = kvp.Key;
             Item item = kvp.Value;
 
-            inventory += $"{itemName} ({item.Weight} kg): {item.Description}";
+            inventory += $"{itemName} ({item.Weight} kg)";
         }
 
         return inventory;
