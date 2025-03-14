@@ -20,28 +20,38 @@ class Game
 	private void CreateRooms()
 	{
 		// Create the rooms
-		Room outside = new Room("in the woods");
-		Room theatre = new Room("in a lecture theatre");
-		Room pub = new Room("in the campus pub");
-		Room lab = new Room("in a computing lab");
-		Room office = new Room("in the computing admin office");
-
+		Room outside = new Room("in a rain-drenched parking lot. Your car is dead. The asylum looms ahead.");
+		Room mainHall = new Room("in a decaying entrance hall. Dust covers the reception desk.");
+		Room eastCorridor = new Room("in a dark hallway. Patient doors line the walls. Something scratched the paint.");
+		Room westWing = new Room("in an abandoned medical wing. Rusted equipment remains on the floors.");
+		Room cafeteria = new Room("in the patient cafeteria. Moldy trays still sit on tables.");
+		Room staffRoom = new Room("in the staff break room. A bloody handprint marks the wall.");
+		Room basement = new Room("in a flooded basement. Water drips from pipes. Rats scatter at your approach.");
+		Room morgue = new Room("in the morgue. Body drawers hang open. Recent footprints cross the dusty floor.");
+		Room medicalStorage = new Room("in a ransacked supply room. Most cabinets are empty or broken.");
+		Room secondFloor = new Room("in the upper ward hallway. More secure rooms line the corridor.");
+		Room recordsRoom = new Room("among shelves of patient files. Someone was searching for something here.");
+		Room secOffice = new Room("in the guard station. Monitors still show static images of empty halls.");
+		Room directorOffice = new Room("in a once-lavish office. Papers about \"Project Echo\" scatter the floor.");
+		Room laboratory = new Room("in a hidden research lab. Strange symbols mark the walls. Equipment hums.");
+		Room ritualChamber = new Room("in a circular room beneath the lab. Candles, symbols, and a strange altar.");
+		
+		
+		
 		// Initialise room exits
-		outside.AddExit("east", theatre);
-		outside.AddExit("south", lab);
-		outside.AddExit("west", pub);
+		outside.AddExit("east", mainHall);
 
-		theatre.AddExit("west", outside);
-		theatre.AddExit("up", pub);
-
-		pub.AddExit("east", outside);
-
-		lab.AddExit("north", outside);
-		lab.AddExit("east", office);
-		lab.AddExit("down", office);
-
-		office.AddExit("west", lab);
-		office.AddExit("down", outside);
+		// theatre.AddExit("west", outside);
+		// theatre.AddExit("up", pub);
+		//
+		// pub.AddExit("east", outside);
+		//
+		// lab.AddExit("north", outside);
+		// lab.AddExit("east", office);
+		// lab.AddExit("down", office);
+		//
+		// office.AddExit("west", lab);
+		// office.AddExit("down", outside);
 
 		// Create your Items here
 		Item crowbar = new(5, "crowbar");
@@ -51,7 +61,7 @@ class Game
 		
 		// And add them to the Rooms
 		outside.Chest.Put("crowbar", crowbar);
-		pub.Chest.Put("medkit", medkit);
+		// pub.Chest.Put("medkit", medkit);
 
 		// Start game outside
 		player.CurrentRoom = outside;
