@@ -20,7 +20,7 @@ class Game
 	private void CreateRooms()
 	{
 		// Create the rooms
-		Room outside = new Room("outside the main entrance of the university");
+		Room outside = new Room("in the woods");
 		Room theatre = new Room("in a lecture theatre");
 		Room pub = new Room("in the campus pub");
 		Room lab = new Room("in a computing lab");
@@ -155,8 +155,7 @@ class Game
 		ColorfulTextWrapper.HighlightWordInText($"Health: {player.Health} / 100", ConsoleColor.Green, "Health", true, false);
 		ColorfulTextWrapper.HighlightWordInText($"Weight: {player.backpack.TotalWeight()} / {player.backpack.MaxWeight} kg", ConsoleColor.Blue, "Weight", true, false);
 		
-		ColorfulTextWrapper.WriteTextWithColor(player.ShowBackpack(), ConsoleColor.Gray, false, false);
-		// TODO: Add inventory (max)weight > weight / maxWeight
+		ColorfulTextWrapper.WriteTextWithColor(player.ShowBackpack() + "\n", ConsoleColor.Gray, false, false);
 	}
 	
 	// Show items in the room

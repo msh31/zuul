@@ -1,11 +1,13 @@
-﻿namespace Zuul;
+﻿// ReSharper disable InconsistentNaming 
+
+namespace Zuul;
 
 class Player
 {
     // auto property
     public Room CurrentRoom { get; set; }
     public int Health { get; private set; }
-    public int MaxHealth { get; }
+    private int MaxHealth { get; }
     public Inventory backpack { get; }
     
     
@@ -24,7 +26,7 @@ class Player
         this.Health -= damage;
     }
 
-    public void Heal(int heal)
+    private void Heal(int heal)
     {
         this.Health += heal;
 
