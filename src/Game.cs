@@ -129,9 +129,22 @@ class Game
 	private void PrintWelcome()
 	{
 		Console.WriteLine();
-		ColorfulTextWrapper.HighlightWordInText($"Welcome to Zuul, {Environment.UserName}!", ConsoleColor.Cyan, "Zuul", true, true);
-		ColorfulTextWrapper.HighlightWordInText("Zuul is a new, incredibly boring adventure game.", ConsoleColor.Gray, "adventure", true, true);
-		ColorfulTextWrapper.HighlightWordInText("Type 'help' if you need help.\n", ConsoleColor.Yellow, "help", true, true);
+		ColorfulTextWrapper.WriteTextWithColor("╔══════════════════════════════════════════════════════════════╗", ConsoleColor.DarkRed, true, true);
+		ColorfulTextWrapper.WriteTextWithColor("║                       Z U U L                               ║", ConsoleColor.Red, true, true);
+		ColorfulTextWrapper.WriteTextWithColor("╚══════════════════════════════════════════════════════════════╝", ConsoleColor.DarkRed, true, true);
+    
+		ColorfulTextWrapper.WriteAnimatedTextWithColor("The voices in your head grow louder as you wake up...", ConsoleColor.Gray, true);
+		Console.WriteLine();
+    
+		ColorfulTextWrapper.WriteTextWithColor("You are Geert, a patient who has been confined to this asylum for over a decade.", ConsoleColor.Gray, true, false);
+		ColorfulTextWrapper.HighlightWordInText("\"The medicine is poison! They're experimenting on you! You need to escape NOW!\"", ConsoleColor.Yellow, "poison", true, false);
+    
+		Console.WriteLine();
+		ColorfulTextWrapper.WriteTextWithColor("You find yourself in the main hall. The asylum seems strangely empty, but there are signs of recent activity.", ConsoleColor.Gray, true, false);
+		ColorfulTextWrapper.WriteTextWithColor("Today is the day you finally break free...", ConsoleColor.DarkRed, true, false);
+    
+		Console.WriteLine();
+		ColorfulTextWrapper.HighlightWordInText("Type 'help' if you need assistance.\n", ConsoleColor.Cyan, "help", true, false);
 		Console.WriteLine(player.CurrentRoom.GetLongDescription());
 	}
 
