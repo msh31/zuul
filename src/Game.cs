@@ -20,51 +20,86 @@ class Game
 	private void CreateRooms()
 	{
 		// Create the rooms
-		Room outside = new Room("in a rain-drenched parking lot. Your car is dead. The asylum looms ahead.");
+		//Room outside = new Room("in a rain-drenched parking lot. Your car is dead.");
 		Room mainHall = new Room("in a decaying entrance hall. Dust covers the reception desk.");
 		Room eastCorridor = new Room("in a dark hallway. Patient doors line the walls. Something scratched the paint.");
 		Room westWing = new Room("in an abandoned medical wing. Rusted equipment remains on the floors.");
 		Room cafeteria = new Room("in the patient cafeteria. Moldy trays still sit on tables.");
-		Room staffRoom = new Room("in the staff break room. A bloody handprint marks the wall.");
+		Room staffRoom = new Room("in the staff break room. A bloody hand print marks the wall.");
 		Room basement = new Room("in a flooded basement. Water drips from pipes. Rats scatter at your approach.");
 		Room morgue = new Room("in the morgue. Body drawers hang open. Recent footprints cross the dusty floor.");
 		Room medicalStorage = new Room("in a ransacked supply room. Most cabinets are empty or broken.");
 		Room secondFloor = new Room("in the upper ward hallway. More secure rooms line the corridor.");
 		Room recordsRoom = new Room("among shelves of patient files. Someone was searching for something here.");
-		Room secOffice = new Room("in the guard station. Monitors still show static images of empty halls.");
-		Room directorOffice = new Room("in a once-lavish office. Papers about \"Project Echo\" scatter the floor.");
+		//Room secOffice = new Room("in the guard station. Monitors still show static images of empty halls.");
+		Room directorsOffice = new Room("in a once-lavish office. Papers about \"Project Echo\" scatter the floor.");
 		Room laboratory = new Room("in a hidden research lab. Strange symbols mark the walls. Equipment hums.");
 		Room ritualChamber = new Room("in a circular room beneath the lab. Candles, symbols, and a strange altar.");
 		
-		
-		
 		// Initialise room exits
-		outside.AddExit("east", mainHall);
+		mainHall.AddExit("east", eastCorridor);
+		mainHall.AddExit("west", westWing, true);
+		mainHall.AddExit("south", cafeteria);
 
-		// theatre.AddExit("west", outside);
-		// theatre.AddExit("up", pub);
-		//
-		// pub.AddExit("east", outside);
-		//
-		// lab.AddExit("north", outside);
-		// lab.AddExit("east", office);
-		// lab.AddExit("down", office);
-		//
-		// office.AddExit("west", lab);
-		// office.AddExit("down", outside);
+		eastCorridor.AddExit("west", mainHall);
+		eastCorridor.AddExit("south", staffRoom);
+
+		westWing.AddExit("east", mainHall);
+		westWing.AddExit("south", medicalStorage);
+		westWing.AddExit("down", basement);
+
+		cafeteria.AddExit("north", mainHall);
+		cafeteria.AddExit("west", westWing);
+
+		staffRoom.AddExit("north", eastCorridor);
+		staffRoom.AddExit("west", cafeteria);
+
+		medicalStorage.AddExit("north", westWing);
+		medicalStorage.AddExit("up", secondFloor);
+
+		secondFloor.AddExit("down", medicalStorage);
+		secondFloor.AddExit("east", recordsRoom);
+
+		recordsRoom.AddExit("west", secondFloor);
+		recordsRoom.AddExit("east", directorsOffice);
+
+		directorsOffice.AddExit("west", recordsRoom);
+		directorsOffice.AddExit("down", laboratory);
+
+		laboratory.AddExit("up", directorsOffice);
+		laboratory.AddExit("east", ritualChamber);
+
+		ritualChamber.AddExit("west", laboratory);
+
+		basement.AddExit("up", westWing);
+		basement.AddExit("east", morgue);
+
+		morgue.AddExit("west", basement);
 
 		// Create your Items here
-		Item crowbar = new(5, "crowbar");
-		Item chainsaw = new(15, "chainsaw");
-		Item medkit = new(25, "medkit");
-		Item key = new(10, "key");
+		Item flashlight = new Item(3, "flashlight");
+		Item medkit = new Item(5, "medkit");
+		Item baseKey = new Item(1, "key");         // Regular key for basic doors
+		Item cardKey = new Item(1, "card");        // Keycard for security doors
+		Item masterKey = new Item(1, "masterkey"); // Master key for the ritual chamber
+		Item sisterNecklace = new Item(1, "necklace");
+		Item ancientBook = new Item(4, "book");
+		Item ritualDagger = new Item(2, "dagger");
+		Item protectiveCharm = new Item(1, "charm");
 		
 		// And add them to the Rooms
-		outside.Chest.Put("crowbar", crowbar);
-		// pub.Chest.Put("medkit", medkit);
+		mainHall.Chest.Put("flashlight", flashlight);
+		westWing.Chest.Put("medkit", medkit);
+		cafeteria.Chest.Put("key", baseKey); 
+		staffRoom.Chest.Put("card", cardKey);
+		morgue.Chest.Put("necklace", sisterNecklace);
+		recordsRoom.Chest.Put("book", ancientBook);
+		laboratory.Chest.Put("masterkey", masterKey);
+		laboratory.Chest.Put("dagger", ritualDagger);
+		secondFloor.Chest.Put("charm", protectiveCharm);
 
 		// Start game outside
-		player.CurrentRoom = outside;
+		player.CurrentRoom = mainHall;
 	}
 
 	//  Main play routine. Loops until end of play.
@@ -139,6 +174,9 @@ class Game
 			case "quit":
 				wantToQuit = true;
 				break;
+			case "unlock":
+				UnlockDoor(command);
+				break;
 		}
 
 		return wantToQuit;
@@ -152,8 +190,7 @@ class Game
 	// Here we print the mission and a list of the command words.
 	private void PrintHelp()
 	{
-		Console.WriteLine("You are lost. You are alone.");
-		Console.WriteLine("You wander around at the university.");
+		Console.WriteLine("You are lost. You are alone. You need to escape.");
 		Console.WriteLine();
 		// let the parser print the commands
 		parser.PrintValidCommands();
@@ -196,6 +233,12 @@ class Game
 			return;
 		}
 
+		if (player.CurrentRoom.IsExitLocked(direction))
+		{
+			ColorfulTextWrapper.HighlightWordInText($"The door to the {direction} is locked. You need to unlock it first.", ConsoleColor.Yellow, $"{direction}", true, false);
+			return;
+		}
+		
 		player.Damage(8);
 		
 		if (!player.IsAlive())
@@ -251,8 +294,79 @@ class Game
 		}
     
 		string itemName = command.SecondWord;
-		string result = player.Use(itemName);
+		string direction = null;
+    
+		// Check if there's a direction specified (like 'use key west')
+		if (command.HasThirdWord())
+		{
+			direction = command.ThirdWord;
+			
+			if (itemName == "key" || itemName == "card" || itemName == "masterkey")
+			{
+				UnlockDoor(command);
+				return;
+			}
+		}
+    
+		string result = player.Use(itemName, direction);
+    
+		if (!string.IsNullOrEmpty(result))
+		{
+			ColorfulTextWrapper.WriteFormattedTextByType(result, "inf", true, false);
+		}
+	}
+	
+	private void UnlockDoor(Command command)
+	{
+		if (!command.HasSecondWord())
+		{
+			Console.WriteLine("Unlock what?");
+			return;
+		}
+    
+		if (!command.HasThirdWord())
+		{
+			Console.WriteLine("Unlock what direction? Try 'unlock key north'");
+			return;
+		}
+    
+		string itemName = command.SecondWord;
+		string direction = command.ThirdWord;
+    
+		// Check if player has key
+		Item item = player.backpack.Get(itemName);
+    
+		if (item == null)
+		{
+			ColorfulTextWrapper.HighlightWordInText($"You don't have a {itemName} in your backpack!", ConsoleColor.Yellow, $"{itemName}", true, false);
+			return;
+		}
 		
-		ColorfulTextWrapper.WriteFormattedTextByType(result, "inf", true, false);
+		player.backpack.Put(itemName, item);
+		
+		if (player.CurrentRoom.GetExit(direction) == null)
+		{
+			Console.WriteLine("There is no door in that direction!");
+			return;
+		}
+    
+		if (!player.CurrentRoom.IsExitLocked(direction))
+		{
+			Console.WriteLine("That door isn't locked!");
+			return;
+		}
+    
+		// Check if this is the right key type for this door
+		string requiredKeyType = player.CurrentRoom.GetKeyType(direction);
+    
+		if (itemName.ToLower() == requiredKeyType.ToLower())
+		{
+			player.CurrentRoom.UnlockExit(direction);
+			ColorfulTextWrapper.WriteTextWithColor($"You unlock the door to the {direction} with the {itemName}.", ConsoleColor.Green, true, false);
+		}
+		else
+		{
+			ColorfulTextWrapper.HighlightWordInText($"The {itemName} doesn't work on this lock. You need a {requiredKeyType}.", ConsoleColor.Red, requiredKeyType, true, false);
+		}
 	}
 }

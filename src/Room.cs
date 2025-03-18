@@ -6,9 +6,11 @@ class Room
 	
 	// Private fields
 	private string description;
-	private Dictionary<string, Room> exits; // stores exits of this room.
 	private Inventory chest;
-	
+	private Dictionary<string, Room> exits; // stores exits of this room.
+	private Dictionary<string, bool> lockedExits;
+	private Dictionary<string, string> keyTypes;
+
 	// properties
 	public Inventory Chest
 	{
@@ -21,14 +23,18 @@ class Room
 	{
 		description = desc;
 		exits = new Dictionary<string, Room>();
+		lockedExits = new Dictionary<string, bool>();
+		keyTypes = new Dictionary<string, string>();
 		
 		chest = new Inventory(999999);
 	}
-
+	
 	// Define an exit for this room.
-	public void AddExit(string direction, Room neighbor)
+	public void AddExit(string direction, Room neighbor, bool isLocked = false, string keyType = "key")
 	{
 		exits.Add(direction, neighbor);
+		lockedExits.Add(direction, isLocked);
+		keyTypes.Add(direction, keyType);
 	}
 
 	// Return the description of the room.
@@ -65,15 +71,66 @@ class Room
 	private string GetExitString()
 	{
 		string str = "Exits: ";
-		str += String.Join(", ", exits.Keys);
-
+    
+		List<string> exitStrings = new List<string>();
+		foreach (var exit in exits.Keys)
+		{
+			if (lockedExits[exit])
+			{
+				exitStrings.Add(exit + " (locked)");
+			}
+			else
+			{
+				exitStrings.Add(exit);
+			}
+		}
+    
+		str += String.Join(", ", exitStrings);
 		return str;
 	}
 	
 	// helper method
 	public string ShowItems()
 	{
-		ColorfulTextWrapper.WriteFormattedTextByType("You see the following items: ", "inf", true, false);
+		ColorfulTextWrapper.WriteTextWithColor("You see the following items: \n", ConsoleColor.Yellow, true, false);
 		return chest.Show();
+	}
+	
+	public void LockExit(string direction)
+	{
+		if (exits.ContainsKey(direction))
+		{
+			lockedExits[direction] = true;
+		}
+	}
+	
+	public void UnlockExit(string direction)
+	{
+		if (lockedExits.ContainsKey(direction))
+		{
+			lockedExits[direction] = false;
+		}
+	}
+	
+	public bool IsExitLocked(string direction)
+	{
+		return lockedExits.ContainsKey(direction) && lockedExits[direction];
+	}
+	
+	public void SetKeyType(string direction, string keyType)
+	{
+		if (exits.ContainsKey(direction))
+		{
+			keyTypes[direction] = keyType;
+		}
+	}
+	
+	public string GetKeyType(string direction)
+	{
+		if (keyTypes.ContainsKey(direction))
+		{
+			return keyTypes[direction];
+		}
+		return "key";
 	}
 }

@@ -68,7 +68,7 @@ class Player
 
         if (CurrentRoom.Chest.Put(itemName, item))
         {
-            ColorfulTextWrapper.WriteAnimatedTextWithColor($"Dropped {itemName}!", ConsoleColor.Gray, true);
+            ColorfulTextWrapper.WriteTextWithColor($"Dropped {itemName}!", ConsoleColor.DarkGreen, true, false);
             return true;
         }
 
@@ -77,11 +77,11 @@ class Player
     
     public string ShowBackpack()
     {
-        ColorfulTextWrapper.WriteFormattedTextByType("Your backpack contains: ", "inf", false, false);
+        ColorfulTextWrapper.WriteTextWithColor("Your backpack contains: ", ConsoleColor.Yellow, false, false);
         return backpack.Show();
     }
 
-    public string Use(string itemName)
+    public string Use(string itemName, string direction = null)
     {
         Item item = backpack.Get(itemName);
 
@@ -90,7 +90,7 @@ class Player
 
         bool consume = false;
         string result = $"You used the {itemName} ";
-        
+    
         switch (itemName)
         {
             case "medkit":
@@ -99,13 +99,26 @@ class Player
                 consume = true;
                 break;
             case "key":
-                result += $"but it doesn't do anything yet..";
+            case "card":
+            case "masterkey":
+                if (direction != null)
+                {
+                    // handled by the UnlockDoor method
+                    result = "";
+                }
+                else
+                {
+                    result += "but you need to specify a direction. Try 'use key north'.";
+                }
+                break;
+            case "charm":
+                result += "and feel a sense of protection wash over you.";
                 break;
             default:
                 result = $"You fiddle with the {itemName}, but nothing special happens.";
                 break;
         }
-        
+    
         if (!consume)
             backpack.Put(itemName, item);
     
