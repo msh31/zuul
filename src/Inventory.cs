@@ -18,16 +18,11 @@ class Inventory
     // methods
     public bool Put(string itemName, Item item)
     {
-        if (item.Weight > MaxWeight)
+        if (item.Weight > FreeWeight())
         {
             return false;
         }
-
-        if (TotalWeight() + item.Weight > MaxWeight)
-        {
-            return false;
-        }
-
+        
         items.Add(itemName, item);
         return true;
     }
