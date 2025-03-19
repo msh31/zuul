@@ -21,7 +21,11 @@ class Parser
 		string word3 = null;
 
 		// string.Split() returns an array
-		string[] words = Console.ReadLine().Split(' ');
+		string input = Console.ReadLine();
+		if (input == null) { input = string.Empty; }
+		
+		string[] words = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+		
 		if (words.Length > 0) { word1 = words[0]; }
 		if (words.Length > 1) { word2 = words[1]; }
 		if (words.Length > 2) { word3 = words[2]; }
