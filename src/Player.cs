@@ -66,12 +66,19 @@ class Player
     {
         Item item = backpack.Get(itemName);
 
+        if (item == null)
+        {
+            ColorfulTextWrapper.WriteFormattedTextByType($"You don't have a {itemName}!", "err", true, false);
+            return false;
+        }
+        
         if (CurrentRoom.Chest.Put(itemName, item))
         {
             ColorfulTextWrapper.WriteTextWithColor($"Dropped {itemName}!", ConsoleColor.DarkGreen, true, false);
             return true;
         }
 
+        backpack.Put(itemName, item);
         return false;
     }
     
