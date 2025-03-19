@@ -348,12 +348,6 @@ class Game
     
 		// Check if player has key
 		Item item = player.backpack.Get(itemName);
-    
-		if (item == null)
-		{
-			ColorfulTextWrapper.HighlightWordInText($"You don't have a {itemName} in your backpack!", ConsoleColor.Yellow, $"{itemName}", true, false);
-			return;
-		}
 		
 		player.backpack.Put(itemName, item);
 		
