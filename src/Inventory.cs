@@ -70,6 +70,9 @@ class Inventory
         {
             string itemName = kvp.Key;
             Item item = kvp.Value;
+            
+            if (inventory.Length > 0)
+                inventory += ", ";
 
             inventory += $"{itemName} ({item.Weight} kg)";
         }
